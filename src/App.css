@@ -9,20 +9,4 @@
   "h h"
   "n c";
 }
-.header{
-  background-color: green;
-    grid-area: h;
-}
 
-.nav{
-  background-color: burlywood;
-grid-area: n;
-}
-
-.content{
-  background-color: cornflowerblue;
-    grid-area: c;
-}
-.header img {
-  width: 80px;
-}
