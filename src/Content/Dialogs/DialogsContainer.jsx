@@ -2,24 +2,22 @@ import React from "react";
 import Dialogs from "./Dialogs";
 import {changeMessageActionCreator, sendMessageCreator} from "../../redux/messagesReducer";
 import {connect} from "react-redux";
+import {withAuthRedirect} from "../../HOC/witAuthRedirect";
+import {compose} from "redux";
 
 
 const mapStateToProps = (state) => {
     return {
-        myDialogs: state.dialogsPage
+        myDialogs: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        changeMessage: (textMessage) => {
-            let action = changeMessageActionCreator(textMessage);
-            dispatch(action);
-        },
-        sendMessage: () => {
-            dispatch(sendMessageCreator());
+        sendMessage: (message) => {
+            dispatch(sendMessageCreator(message));
         }
     }
 }
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
-
+const DialogsContainer = compose(withAuthRedirect, connect(mapStateToProps, mapDispatchToProps))(Dialogs);
 export default DialogsContainer;

@@ -1,7 +1,0 @@
-.info{
-    padding-left: 50px;
-}
-.friendsWrapper{
-    display: grid;
-    grid-template-columns: 2fr 6fr;
-}

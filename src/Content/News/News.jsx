@@ -1,24 +1,28 @@
 import React, {createRef} from 'react';
-import p from './News.module.css'
 
 
-const News = (props) => {
-    debugger;
-    let newsRef = React.createRef();
-    let changeTextNews = () => {
-        let news = newsRef.current.value;
-        props.addNewsText(news)
+class News extends React.Component {
+    constructor(props) {
+        super(props);
     }
-    let addTextNews = () => {
-        props.pushNewsText();
+    newsRef = React.createRef();
+    changeTextNews = () => {
+        let news = this.newsRef.current.value;
+        this.props.addNewsText(news)
     }
-    return (
-        <div>
-           <textarea value={props.newsState.newsText} ref={newsRef} onChange={changeTextNews}>{props.newsState.newsText}</textarea>
-            <button onClick={addTextNews}>Add News</button>
-            {props.newsState.news.map(n => <div>{n.text}</div>)}
-        </div>
-    );
+    addTextNews = () => {
+        this.props.pushNewsText();
+    }
+    render() {
+        return (
+            <div>
+                <textarea value={this.props.newsState.newsText} ref={this.newsRef}
+                          onChange={this.changeTextNews}>{this.props.newsState.newsText}</textarea>
+                <button onClick={this.addTextNews}>Add News</button>
+                {this.props.newsState.news.map(n => <div>{n.text}</div>)}
+            </div>
+        );
+    }
 }
 
 export default News;

@@ -1,5 +1,9 @@
+import {usersAPI} from "../API/API";
+
 const ADD_POST = 'ADD-POST';
 const ADD_NEW_POST_TEXT = 'ADD-NEW-POST-TEXT';
+const ADD_NEW_PROFILE = 'ADD-NEW-PROFILE';
+const STATUS = 'STATUS';
 
 let initialState = {
 
@@ -10,6 +14,8 @@ let initialState = {
             {message: 'hey', like: 20},
         ],
     newPostText: 'kamasutra',
+    profile: null,
+    status: "",
 
 };
 
@@ -23,16 +29,19 @@ const postsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {
-                message: state.newPostText,
+                message: action.post,
                 like: 0
             }
             stateCopy.postsData.push(newPost);
-            stateCopy.newPostText = '';
             return stateCopy;
-        case ADD_NEW_POST_TEXT:
-            let stateCopyNewText = {...state};
-            stateCopyNewText.newPostText = action.textPost;
-            return stateCopyNewText;
+        case ADD_NEW_PROFILE:
+            let stateCopyProfile = {...state};
+            stateCopyProfile.profile = action.profile;
+            return stateCopyProfile;
+        case STATUS:
+            let stateCopyStatus = {...state};
+            stateCopyStatus.status = action.status;
+            return stateCopyStatus;
         default:
             return state;
     }
@@ -40,8 +49,33 @@ const postsReducer = (state = initialState, action) => {
 
 }
 
-export const addPostActionCreator = () => ({type: 'ADD-POST'})
+export const addPostActionCreator = (post) => ({type: 'ADD-POST', post})
+export const setUserProfileActionCreator = (profile) => ({type: 'ADD-NEW-PROFILE', profile})
+export const setStatus = (status) => ({type: 'STATUS', status})
 
-export const addNewPostTextActionCreator = (textPost) => ({type: 'ADD-NEW-POST-TEXT', textPost: textPost})
-
+export const setProfileThunk = (userId) => {
+   return (dispatch) => {
+       usersAPI.getProfile(userId)
+           .then(data => {
+               dispatch(setUserProfileActionCreator(data));
+           })
+   }
+}
+export const getStatusThunk = (userId) => {
+    return (dispatch) => {
+        usersAPI.getStatus(userId)
+            .then(response=> {
+                dispatch(setStatus(response.data));
+            })
+    }
+}
+export const setStatusThunk = (status) => {
+    return (dispatch) => {
+        usersAPI.putStatus(status)
+            .then(response => {
+                if (response.data.resultCode === 0){
+                    dispatch(setStatus(status));
+                }   })
+    }
+}
 export default postsReducer;

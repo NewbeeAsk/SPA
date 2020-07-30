@@ -1,17 +1,21 @@
 import React from "react";
-import s from './Contacts.module.css'
 import {NavLink} from "react-router-dom";
 
-const Contacts = (props) => {
-    let path="/dialogs/" + props.id;
-    return(
+class Contacts extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    path="/dialogs/" + this.props.id;
+    render() {
+        return(
             <div>
-               <NavLink to={path}>
-                   <img src = {props.image}/>
-                   {props.name}
+               <NavLink to={this.path}>
+                   <img src = {this.props.image}/>
+                   {this.props.name}
                </NavLink>
             </div>
-    )
+         )
+    }
 }
 
 export default Contacts;

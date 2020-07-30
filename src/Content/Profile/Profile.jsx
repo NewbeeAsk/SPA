@@ -8,7 +8,7 @@ const Profile = (props) => {
 
     return (
         <div>
-            <ProfileInfo/>
+            <ProfileInfo setStatusThunk={props.setStatusThunk} status={props.status} profile={props.profile} userId={props.state.auth.userId}/>
             <MyPostsContainer />
         </div>
     );

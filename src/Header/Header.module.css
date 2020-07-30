@@ -2,6 +2,12 @@
     background-color: green;
       grid-area: h;
   }
-  .header img {
+.header img {
     width: 80px;
-  }
+}
+.loginBlock{
+  float: right;
+}
+.unlogin{
+    float: left;
+}

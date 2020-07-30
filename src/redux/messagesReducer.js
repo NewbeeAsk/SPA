@@ -1,4 +1,3 @@
-const CHANGE_MESSAGE = 'CHANGE-MESSAGE';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
 let initialState={
@@ -32,31 +31,22 @@ let initialState={
                 image: 'https://rubic.us/wp-content/uploads/2019/10/nashi-v-SSHA.jpg'
             }
         ],
-        newMessage: '',
 };
 
 const messagesReducer = (state=initialState, action) => {
-
     switch (action.type) {
-        case CHANGE_MESSAGE:
-            let stateCopy = {...state}
-            stateCopy.newMessage = action.textMessage;
-        return stateCopy;
         case SEND_MESSAGE:
             let stateCopyMessage = {...state};
             let newMessage = {
-                message: state.newMessage
+                message: action.message
             }
             stateCopyMessage.messageData.push(newMessage);
-            stateCopyMessage.newMessage = '';
             return stateCopyMessage;
         default:
             return state;
     }
 }
 
-export const sendMessageCreator = () => ({type: 'SEND-MESSAGE'})
-
-export const changeMessageActionCreator = (textMessage) => ({type: 'CHANGE-MESSAGE', textMessage: textMessage})
+export const sendMessageCreator = (message) => ({type: 'SEND-MESSAGE', message: message})
 
 export default messagesReducer;
